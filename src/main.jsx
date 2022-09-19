@@ -1,10 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
+import { MantineProvider } from '@mantine/core';
+import { useColorScheme } from '@mantine/hooks';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-)
+function LindosDias() {
+  const colorScheme = useColorScheme();
+
+  return (
+    <React.StrictMode>
+      <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
+        <App />
+      </MantineProvider>
+    </React.StrictMode>
+  )
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<LindosDias />);

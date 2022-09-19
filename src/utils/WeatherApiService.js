@@ -20,7 +20,6 @@ export default class WeatherApiService {
   async loadDays() {
     await this.fetchDataFromWeatherAPI();
     this.buildDays();
-    console.log("this.days", this.days);
     return this.days;
   }
 
@@ -69,7 +68,6 @@ export default class WeatherApiService {
     if (!this.isRelevantHour(evaluatedDay, hour)) {
       return;
     }
-    console.table({ hour: hour.hour(), isMorning: this.isMorning(hour) })
     const pointedHalfDay = this.isMorning(hour) ? evaluatedDay.morning : evaluatedDay.afternoon
     pointedHalfDay.weather.precipitation += this.timeSeries.hourly.precipitation[timeSerieIndex];
     pointedHalfDay.weather.cloudcover += this.timeSeries.hourly.cloudcover[timeSerieIndex];

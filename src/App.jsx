@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import WeatherApiService from './utils/WeatherApiService';
-import { Loader } from '@mantine/core';
+import { Loader, Space } from '@mantine/core';
 import Day from './Day';
 import './App.css';
 
@@ -27,12 +27,15 @@ function App() {
       {loading && <Loader />}
 
       {!loading && days.map(day => (
-        <Day
-          key={day.date}
-          date={day.date}
-          morning={day.morning}
-          afternoon={day.afternoon}
-        />
+        <>
+          <Day
+            key={day.date}
+            date={day.date}
+            morning={day.morning}
+            afternoon={day.afternoon}
+          />
+          <Space h="lg" />
+        </>
       ))}
     </>
   )

@@ -1,22 +1,17 @@
+import { Card, Text } from '@mantine/core';
 import HalfDay from "./HalfDay";
+
 
 function Day(props) {
   const { date, morning, afternoon } = props;
   const formattedDate = date.locale('es').format('dddd, MMMM D YYYY');
 
   return (
-    <div>
-      <h2>{formattedDate}:</h2>
-      <div>
-        <h3>Mañana:</h3>
-        <HalfDay data={morning} />
-      </div>
-      <div>
-        <h3>Tarde:</h3>
-        <HalfDay data={afternoon} />
-      </div>
-      <hr />
-    </div>
+    <Card shadow="sm" p="lg" radius="md" withBorder >
+      <Text weight={500} size="lg">{formattedDate}</Text>
+      <HalfDay data={morning} />
+      <HalfDay data={afternoon} />
+    </Card>
   );
 }
 
