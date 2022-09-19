@@ -1,4 +1,4 @@
-
+import WeatherScore from "./WeatherScore";
 export default class HalfDay {
   constructor(date, type) {
     this.date = date;
@@ -25,7 +25,11 @@ export default class HalfDay {
     return this.weather.windspeed / this.hours;
   }
 
-  hasGoodWeather() {
-    return this.weather.precipitation < 3 && this.averageCloudcover() < 30 && this.averageWindspeed() < 25;
+  weatherScore() {
+    return new WeatherScore({
+      precipitation: this.weather.precipitation,
+      averageCloudcover: this.averageCloudcover(),
+      averageWindspeed: this.averageWindspeed(),
+    }).score();
   }
 }

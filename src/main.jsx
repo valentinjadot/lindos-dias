@@ -6,7 +6,8 @@ import { MantineProvider } from '@mantine/core';
 import { useColorScheme } from '@mantine/hooks';
 
 function LindosDias() {
-  const colorScheme = useColorScheme();
+  // const colorScheme = useColorScheme();
+  const colorScheme = 'dark';
 
   return (
     <React.StrictMode>

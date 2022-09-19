@@ -52,14 +52,6 @@ export default class WeatherApiService {
       });
 
       this.days.push(evaluatedDay);
-
-      if (evaluatedDay.morning.hasGoodWeather()) {
-        this.goodHalfDays.push(evaluatedDay.morning);
-      }
-
-      if (evaluatedDay.afternoon.hasGoodWeather()) {
-        this.goodHalfDays.push(evaluatedDay.afternoon);
-      }
     });
   }
 
