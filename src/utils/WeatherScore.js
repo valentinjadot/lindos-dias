@@ -5,8 +5,6 @@ export default class WeatherScore {
     this.precipitation = precipitation;
     this.averageCloudcover = averageCloudcover;
     this.averageWindspeed = averageWindspeed;
-    console.table({ rain: this.precipitationScore(), cloud: this.cloudcoverScore(), wind: this.windScore(), total: this.score() })
-
   }
 
   score() {

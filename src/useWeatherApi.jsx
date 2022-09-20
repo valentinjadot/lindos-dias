@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 
 export default function useWeatherApi() {
   const [days, setDays] = useState(null);
+  const [coords, setCoords] = useState(null);
 
   useEffect(() => {
     loadData();
@@ -11,7 +12,8 @@ export default function useWeatherApi() {
   const loadData = async () => {
     const weatherService = new WeatherApiService();
     setDays(await weatherService.loadDays());
+    setCoords(await weatherService.getCoords());
   }
 
-  return days;
+  return [days, coords];
 }

@@ -8,7 +8,6 @@ const NOON_IN_HOURS = 12;
 
 export default class WeatherApiService {
   constructor() {
-    this.WEATHER_API_URL = `https://api.open-meteo.com/v1/forecast?latitude=-51.73&longitude=-72.50&hourly=precipitation,cloudcover,windspeed_10m&daily=sunrise,sunset&timezone=auto`;
     this.timeSeries = {
       daily: [],
       hourly: []
@@ -18,19 +17,50 @@ export default class WeatherApiService {
   }
 
   async loadDays() {
+    await this.buildAPIUrl();
     await this.fetchDataFromWeatherAPI();
     this.buildDays();
     return this.days;
   }
 
+  getCoords() {
+    return this.position.coords;
+  }
+
   async fetchDataFromWeatherAPI() {
-    let res = await fetch(this.WEATHER_API_URL);
+    let res = await fetch(this.url);
     let { daily, hourly } = await res.json();
 
     this.timeSeries = {
       daily,
       hourly
     };
+    console.log(this.timeSeries);
+  }
+
+  async buildAPIUrl() {
+    this.position = await this.requestPosition();
+    let { latitude, longitude } = this.getCoords();
+    console.log(this.position);
+    this.url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=precipitation,cloudcover,windspeed_10m&daily=sunrise,sunset&timezone=auto`;
+  }
+
+  requestPosition() {
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+    };
+
+    return new Promise(function (resolve, reject) {
+      navigator.geolocation.getCurrentPosition(
+        position => { resolve(position); },
+        error => { reject(error); },
+        options);
+    });
+  }
+
+  savePosition(position) {
+    this.position = position;
   }
 
   buildDays() {
@@ -60,7 +90,8 @@ export default class WeatherApiService {
     if (!this.isRelevantHour(evaluatedDay, hour)) {
       return;
     }
-    const pointedHalfDay = this.isMorning(hour) ? evaluatedDay.morning : evaluatedDay.afternoon
+    const pointedHalfDay = this.isMorning(hour) ? evaluatedDay.morning : evaluatedDay.afternoon;
+
     pointedHalfDay.weather.precipitation += this.timeSeries.hourly.precipitation[timeSerieIndex];
     pointedHalfDay.weather.cloudcover += this.timeSeries.hourly.cloudcover[timeSerieIndex];
     pointedHalfDay.weather.windspeed += this.timeSeries.hourly.windspeed_10m[timeSerieIndex];
