@@ -1,22 +1,11 @@
-import { useState, useEffect } from 'react';
-import WeatherApiService from './utils/WeatherApiService';
 import { Loader, Space } from '@mantine/core';
 import Day from './Day';
+import useWeatherApi from './useWeatherApi';
 import './App.css';
 
+
 function App() {
-  const [days, setDays] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const loadData = async () => {
-    const weatherService = new WeatherApiService();
-    setDays(await weatherService.loadDays());
-    setLoading(false);
-  }
+  const days = useWeatherApi();
 
   return (
     <>
@@ -24,9 +13,9 @@ function App() {
 
       <h1>Lindos dias en Puerto Natales</h1>
 
-      {loading && <Loader />}
+      {!days && <Loader />}
 
-      {!loading && days.map(day => (
+      {days && days.map(day => (
         <>
           <Day
             key={day.date}
