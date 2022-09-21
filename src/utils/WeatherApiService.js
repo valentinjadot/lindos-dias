@@ -5,9 +5,10 @@ import Day from './Day';
 dayjs.extend(isSameOrBefore);
 
 const NOON_IN_HOURS = 12;
-
 export default class WeatherApiService {
-  constructor() {
+  constructor(coords) {
+    this.coords = coords;
+    this.url = null;
     this.timeSeries = {
       daily: [],
       hourly: []
@@ -16,14 +17,13 @@ export default class WeatherApiService {
   }
 
   async loadDays() {
+    if (!this.coords.latitude || !this.coords.longitude) {
+      throw new Error('No coordinates provided');
+    }
     await this.buildAPIUrl();
     await this.fetchDataFromWeatherAPI();
     this.buildDays();
     return this.days;
-  }
-
-  getCoords() {
-    return this.position.coords;
   }
 
   async fetchDataFromWeatherAPI() {
@@ -37,24 +37,10 @@ export default class WeatherApiService {
   }
 
   async buildAPIUrl() {
-    this.position = await this.requestPosition();
-    let { latitude, longitude } = this.getCoords();
-    this.url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=precipitation,cloudcover,windspeed_10m&daily=sunrise,sunset&timezone=auto`;
+    this.url = `https://api.open-meteo.com/v1/forecast?latitude=${this.coords.latitude}&longitude=${this.coords.longitude}&hourly=precipitation,cloudcover,windspeed_10m&daily=sunrise,sunset&timezone=auto`;
+    console.log(this.url);
   }
 
-  requestPosition() {
-    const options = {
-      enableHighAccuracy: true,
-      timeout: 5000,
-    };
-
-    return new Promise(function (resolve, reject) {
-      navigator.geolocation.getCurrentPosition(
-        position => { resolve(position); },
-        error => { reject(error); },
-        options);
-    });
-  }
 
   savePosition(position) {
     this.position = position;

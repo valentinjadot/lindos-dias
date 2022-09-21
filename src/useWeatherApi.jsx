@@ -1,19 +1,18 @@
 import WeatherApiService from './utils/WeatherApiService';
 import { useState, useEffect } from 'react';
 
-export default function useWeatherApi() {
+export default function useWeatherApi(coords) {
   const [days, setDays] = useState(null);
-  const [coords, setCoords] = useState(null);
+  console.log(coords)
 
   useEffect(() => {
     loadData();
   }, []);
 
   const loadData = async () => {
-    const weatherService = new WeatherApiService();
+    const weatherService = new WeatherApiService(coords);
     setDays(await weatherService.loadDays());
-    setCoords(await weatherService.getCoords());
   }
 
-  return [days, coords];
+  return [days];
 }
