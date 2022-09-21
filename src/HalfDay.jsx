@@ -1,39 +1,67 @@
-import { Group, Text, Badge } from '@mantine/core';
+import { Group, Text, Badge, Space } from '@mantine/core';
 
-function HalfDay(props) {
-  const { data } = props;
+export default function HalfDay(props) {
+  const { halfDay } = props;
 
-  const badgeColor = () => {
-    const score = data.weatherScore()
-    if (score >= 80) return 'green'
-    else if (score >= 60) return 'yellow'
-    else if (score >= 10) return 'red'
-    else if (isNaN(score)) return 'grey'
-  }
+  const TIERS_DATA = [
+    {
+      color: 'grey',
+      sentence: 'No hay dato'
+    },
+    {
+      color: 'red',
+      sentence: 'Nope'
+    },
+    {
+      color: 'yellow',
+      sentence: 'Meh'
+    },
+    {
+      color: 'green',
+      sentence: 'Hermoso 🤩 Al agua!'
+    },
+  ]
+
+  const tierData = TIERS_DATA[halfDay.weatherScore().tierIndex()];
 
   return (
     <>
+      <Space h="sm" />
       <Group position="apart" mt="md" mb="xs">
-        <Text weight={500}>{data.type === "morning" ? 'Mañana' : 'Tarde'}</Text>
+        <Text weight={600}>En la {halfDay.type === "morning" ? 'Mañana' : 'Tarde'}</Text>
 
-        <Badge color={badgeColor()} size="lg">
-          {data.weatherScore().toFixed(0)}
+        <Badge color={tierData.color} size="lg">
+          {tierData.sentence}
         </Badge>
       </Group>
 
-      <Text size="md" color="dimmed">
-        💦 {data.weather.precipitation.toFixed(0)} mm
+      <Space h="sm" />
+
+      <Group position="center">
+        <Text>
+          🎯 Puntaje:
+        </Text>
+
+        <Text weight="bold">
+          {halfDay.weatherScore().score().toFixed(0)}/100
+        </Text>
+      </Group>
+
+      <Text>
+        Detalle:
       </Text>
 
       <Text size="md" color="dimmed">
-        ⛅️ {data.averageCloudcover().toFixed(0)} %
+        💦 {halfDay.precipitation().toFixed(0)} mm
       </Text>
 
       <Text size="md" color="dimmed">
-        🌬 {data.averageWindspeed().toFixed(0)} km/h
+        ⛅️ {halfDay.averageCloudcover().toFixed(0)} %
+      </Text>
+
+      <Text size="md" color="dimmed">
+        🌬 {halfDay.averageWindspeed().toFixed(0)} km/h
       </Text>
     </>
   );
 }
-
-export default HalfDay;

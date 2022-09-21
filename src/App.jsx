@@ -38,7 +38,7 @@ function App() {
   return (
     <>
       <h1>🚣‍♂️</h1>
-      <h1>Lindos dias</h1>
+      <h1>Lindos dias para andar en kayak</h1>
 
       {!days && <LoadSection />}
 

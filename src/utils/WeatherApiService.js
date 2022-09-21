@@ -13,7 +13,6 @@ export default class WeatherApiService {
       hourly: []
     };
     this.days = [];
-    this.goodHalfDays = [];
   }
 
   async loadDays() {
@@ -35,13 +34,11 @@ export default class WeatherApiService {
       daily,
       hourly
     };
-    console.log(this.timeSeries);
   }
 
   async buildAPIUrl() {
     this.position = await this.requestPosition();
     let { latitude, longitude } = this.getCoords();
-    console.log(this.position);
     this.url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=precipitation,cloudcover,windspeed_10m&daily=sunrise,sunset&timezone=auto`;
   }
 
@@ -92,10 +89,10 @@ export default class WeatherApiService {
     }
     const pointedHalfDay = this.isMorning(hour) ? evaluatedDay.morning : evaluatedDay.afternoon;
 
-    pointedHalfDay.weather.precipitation += this.timeSeries.hourly.precipitation[timeSerieIndex];
-    pointedHalfDay.weather.cloudcover += this.timeSeries.hourly.cloudcover[timeSerieIndex];
-    pointedHalfDay.weather.windspeed += this.timeSeries.hourly.windspeed_10m[timeSerieIndex];
-    pointedHalfDay.hours++;
+    pointedHalfDay.addPrecipitation(this.timeSeries.hourly.precipitation[timeSerieIndex]);
+    pointedHalfDay.addCloudcover(this.timeSeries.hourly.cloudcover[timeSerieIndex]);
+    pointedHalfDay.addWindspeed(this.timeSeries.hourly.windspeed_10m[timeSerieIndex]);
+    pointedHalfDay.addHour();
   }
 
   isRelevantHour(evaluatedDay, hour) {

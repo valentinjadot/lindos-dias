@@ -5,6 +5,15 @@ export default class WeatherScore {
     this.precipitation = precipitation;
     this.averageCloudcover = averageCloudcover;
     this.averageWindspeed = averageWindspeed;
+
+
+  }
+
+  tierIndex() {
+    if (this.score() >= 80) return 3;
+    else if (this.score() >= 60) return 2;
+    else if (this.score() >= 10) return 1;
+    else return 0;
   }
 
   score() {
