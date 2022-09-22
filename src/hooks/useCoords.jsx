@@ -8,8 +8,8 @@ import {
 const DEFAULT_POSITION = {
   name: 'Puerto Natales',
   coords: {
-    latitude: '51.72',
-    longitude: '72.51',
+    latitude: '-51.72',
+    longitude: '-72.51',
   },
 };
 
