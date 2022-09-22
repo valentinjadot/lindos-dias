@@ -7,7 +7,7 @@ import HalfDay from './HalfDay';
 
 export default function Day(props) {
   const { date, morning, afternoon } = props;
-  const formattedDate = date.locale('es').format('dddd, MMMM D YYYY');
+  const formattedDate = date.locale('es').format('dddd, MMMM D');
 
   return (
     <Card shadow="sm" p="lg" radius="md" withBorder>

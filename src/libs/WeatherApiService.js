@@ -16,6 +16,7 @@ export default class WeatherApiService {
       hourly: [],
     };
     this.days = [];
+    this.goodHalfDays = [];
   }
 
   async loadDays() {
@@ -25,7 +26,12 @@ export default class WeatherApiService {
     await this.buildAPIUrl();
     await this.fetchDataFromWeatherAPI();
     this.buildDays();
-    return this.days;
+    const { days, goodHalfDays } = this;
+
+    return {
+      days,
+      goodHalfDays,
+    };
   }
 
   async fetchDataFromWeatherAPI() {
@@ -64,6 +70,13 @@ export default class WeatherApiService {
       });
 
       this.days.push(evaluatedDay);
+
+      if (evaluatedDay.morning.weatherScore().score() >= 80) {
+        this.goodHalfDays.push(evaluatedDay.morning);
+      }
+      if (evaluatedDay.afternoon.weatherScore().score() >= 80) {
+        this.goodHalfDays.push(evaluatedDay.afternoon);
+      }
     });
   }
 
