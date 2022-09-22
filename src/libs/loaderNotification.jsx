@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { showNotification, updateNotification } from '@mantine/notifications';
 import { IconCheck } from '@tabler/icons';
 

@@ -16,5 +16,4 @@ export default class Weather {
   isGood() {
     return this.precipitation < 3 && this.averageCloudcover() < 30 && this.averageWindspeed() < 25;
   }
-
 }

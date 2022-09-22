@@ -13,7 +13,7 @@ function LindosDias() {
   return (
     <React.StrictMode>
       <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
-        <NotificationsProvider position="top-right">
+        <NotificationsProvider position="bottom-right">
           <App />
         </NotificationsProvider>
       </MantineProvider>

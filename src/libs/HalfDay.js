@@ -1,4 +1,5 @@
-import WeatherScore from "./WeatherScore";
+import WeatherScore from './WeatherScore';
+
 export default class HalfDay {
   constructor(date, type) {
     this.date = date;
@@ -7,14 +8,16 @@ export default class HalfDay {
       precipitation: 0,
       cloudcover: 0,
       windspeed: 0,
-      hours: 0
-    }
+      hours: 0,
+    };
   }
+
   set sunset(time) {
-    this.sunset = time
+    this.sunset = time;
   }
+
   set sunrise(time) {
-    this.sunrise = time
+    this.sunrise = time;
   }
 
   addPrecipitation(precipitation) {
@@ -30,7 +33,7 @@ export default class HalfDay {
   }
 
   addHour() {
-    this.weatherData.hours++;
+    this.weatherData.hours += 1;
   }
 
   precipitation() {
@@ -50,6 +53,6 @@ export default class HalfDay {
       precipitation: this.precipitation(),
       averageCloudcover: this.averageCloudcover(),
       averageWindspeed: this.averageWindspeed(),
-    })
+    });
   }
 }

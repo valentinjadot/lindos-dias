@@ -5,15 +5,13 @@ export default class WeatherScore {
     this.precipitation = precipitation;
     this.averageCloudcover = averageCloudcover;
     this.averageWindspeed = averageWindspeed;
-
-
   }
 
   tierIndex() {
     if (this.score() >= 80) return 3;
-    else if (this.score() >= 60) return 2;
-    else if (this.score() >= 10) return 1;
-    else return 0;
+    if (this.score() >= 60) return 2;
+    if (this.score() >= 10) return 1;
+    return 0;
   }
 
   score() {
@@ -22,7 +20,7 @@ export default class WeatherScore {
   }
 
   precipitationScore() {
-    return this.mapScore(this.precipitation, this.MAX_RAIN_MM, 0)
+    return this.mapScore(this.precipitation, this.MAX_RAIN_MM, 0);
   }
 
   cloudcoverScore() {
@@ -30,11 +28,10 @@ export default class WeatherScore {
   }
 
   windScore() {
-    return this.mapScore(this.averageWindspeed, this.MAX_WIND_KMH, 0)
+    return this.mapScore(this.averageWindspeed, this.MAX_WIND_KMH, 0);
   }
 
   mapScore(n, realMin, realMax, scoreMin = 0, scoreMax = 1) {
     return ((n - realMin) / (realMax - realMin)) * (scoreMax - scoreMin) + scoreMin;
-  };
-
+  }
 }

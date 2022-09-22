@@ -1,29 +1,25 @@
-import { Space } from '@mantine/core';
-import useCoords from './useCoords';
+import useCoords from './hooks/useCoords';
 import './App.css';
-import MapSection from './MapSection';
-import DaysSection from './DaysSection';
-import LoaderSection from './LoaderSection';
-import { useState } from 'react';
-import { Button } from '@mantine/core';
-import { IconMapPin } from '@tabler/icons';
+import MapSection from './sections/MapSection';
+import DaysSection from './sections/DaysSection';
+import GeolocalizationButton from './components/GeolocalizationButton';
 
 
 export default function App() {
-  const [coords, loading, reloadCoords] = useCoords();
+  const [coords, isLoading, isRealCoords, reloadCoords] = useCoords();
 
   return (
     <>
       <h1>🚣‍♂️</h1>
       <h1>¿Cómo está el día para andar en kayak?</h1>
 
-
-      {!coords && <LoaderSection />}
-
-
       {coords && (
         <>
-          <Button leftIcon={<IconMapPin />} onClick={reloadCoords} disabled={loading}>{loading ? 'Buscando...' : 'Geolocalizar'}</Button>
+          <GeolocalizationButton
+            isLoading={isLoading}
+            onClick={reloadCoords}
+            desactivated={isRealCoords}
+          />
           <MapSection coords={coords} />
           <DaysSection coords={coords} />
         </>

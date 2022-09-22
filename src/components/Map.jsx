@@ -5,6 +5,7 @@ export default function Map(props) {
 
     return (
         <iframe
+            title="map"
             width="450"
             height="250"
             frameBorder="0"

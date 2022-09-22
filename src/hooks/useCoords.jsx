@@ -8,12 +8,13 @@ const DEFAULT_POSITION = {
   name: "Puerto Natales",
   coords: {
     latitude: "51.72",
-    longitude: "72.51"
+    longitude: "72.51",
   }
 }
 
 export default function useCoords() {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRealCoords, setIsRealCoords] = useState(false);
   const [coords, setCoords] = useState(null);
   const [forcedReload, setForcedReload] = useState(null);
 
@@ -29,11 +30,11 @@ export default function useCoords() {
   }, [forcedReload]);
 
   const getCoords = () => {
-    setLoading(true);
+    setIsLoading(true);
     openLoaderNotification({
       id: 'load-coords',
       title: 'Geolocalizando...',
-      message: 'Sapeando donde estas (si lo autorizas obvio)'
+      message: 'Aber aber por donde andas'
     });
     navigator.geolocation.getCurrentPosition(success, error, options);
   }
@@ -45,17 +46,26 @@ export default function useCoords() {
       id: 'load-coords',
       message: `Estas en latidud ${coords.latitude.toFixed(2)} y longitud ${coords.longitude.toFixed(2)}!`
     });
-    setLoading(false);
+    setIsRealCoords(true);
+    setIsLoading(false);
   }
 
   function error(err) {
+    let message;
+    if (err.code === 1) {
+      message = `Tu navigator no me deja geolocalizarte 😪 `
+    } else {
+      message = `No logré pillar por donde andas..`
+    }
+    message += ` Digamos ${DEFAULT_POSITION.name} entonces`;
+
     setCoords(DEFAULT_POSITION.coords);
     closeLoaderNotification({
       id: 'load-coords',
-      message: `No logré pillar por donde andas.. Digamos ${DEFAULT_POSITION.name} entonces`
+      message
     });
-    setLoading(false);
+    setIsLoading(false);
   }
 
-  return [coords, loading, reloadCoords];
+  return [coords, isLoading, isRealCoords, reloadCoords];
 }

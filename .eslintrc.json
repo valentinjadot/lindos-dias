@@ -1,0 +1,23 @@
+{
+    "extends": [
+        "airbnb",
+        "airbnb/hooks"
+    ],
+    "rules": {
+        "react/prop-types": "off",
+        "import/order": "error",
+        "simple-import-sort/exports": "error",
+        "simple-import-sort/imports": "error",
+        "unused-imports/no-unused-imports": "error",
+        "unused-imports/no-unused-vars": [
+            "error",
+            {
+                "argsIgnorePattern": "^_"
+            }
+        ]
+    },
+    "plugins": [
+        "simple-import-sort",
+        "unused-imports"
+    ]
+}
