@@ -1,7 +1,7 @@
 import 'dayjs/locale/es';
 
 export default function SummaryListOfDays({ goodHalfDays }) {
-  if (goodHalfDays.length > 3) {
+  if (goodHalfDays.length < 1 || goodHalfDays.length > 3) {
     return '';
   }
   const formater = (e) => (
