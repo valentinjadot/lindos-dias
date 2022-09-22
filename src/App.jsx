@@ -1,9 +1,9 @@
-import useCoords from './hooks/useCoords';
-import './App.css';
-import MapSection from './sections/MapSection';
-import DaysSection from './sections/DaysSection';
-import GeolocalizationButton from './components/GeolocalizationButton';
+import React from 'react';
 
+import GeolocalizationButton from './components/GeolocalizationButton';
+import useCoords from './hooks/useCoords';
+import DaysSection from './sections/DaysSection';
+import MapSection from './sections/MapSection';
 
 export default function App() {
   const [coords, isLoading, isRealCoords, reloadCoords] = useCoords();
@@ -25,5 +25,5 @@ export default function App() {
         </>
       )}
     </>
-  )
+  );
 }

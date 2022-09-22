@@ -1,16 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
 import {
+  closeLoaderNotification,
   openLoaderNotification,
-  closeLoaderNotification
-} from './utils/loaderNotification';
+} from '../libs/loaderNotification';
 
 const DEFAULT_POSITION = {
-  name: "Puerto Natales",
+  name: 'Puerto Natales',
   coords: {
-    latitude: "51.72",
-    longitude: "72.51",
-  }
-}
+    latitude: '51.72',
+    longitude: '72.51',
+  },
+};
 
 export default function useCoords() {
   const [isLoading, setIsLoading] = useState(false);
@@ -25,26 +26,12 @@ export default function useCoords() {
 
   const reloadCoords = () => setForcedReload(!forcedReload);
 
-  useEffect(() => {
-    getCoords();
-  }, [forcedReload]);
-
-  const getCoords = () => {
-    setIsLoading(true);
-    openLoaderNotification({
-      id: 'load-coords',
-      title: 'Geolocalizando...',
-      message: 'Aber aber por donde andas'
-    });
-    navigator.geolocation.getCurrentPosition(success, error, options);
-  }
-
   function success(pos) {
-    const coords = pos.coords;
+    const { coords } = pos;
     setCoords(coords);
     closeLoaderNotification({
       id: 'load-coords',
-      message: `Estas en latidud ${coords.latitude.toFixed(2)} y longitud ${coords.longitude.toFixed(2)}!`
+      message: `Estas en latidud ${coords.latitude.toFixed(2)} y longitud ${coords.longitude.toFixed(2)}!`,
     });
     setIsRealCoords(true);
     setIsLoading(false);
@@ -53,19 +40,33 @@ export default function useCoords() {
   function error(err) {
     let message;
     if (err.code === 1) {
-      message = `Tu navigator no me deja geolocalizarte 😪 `
+      message = 'Tu navigator no me deja geolocalizarte 😪 ';
     } else {
-      message = `No logré pillar por donde andas..`
+      message = 'No logré pillar por donde andas..';
     }
     message += ` Digamos ${DEFAULT_POSITION.name} entonces`;
 
     setCoords(DEFAULT_POSITION.coords);
     closeLoaderNotification({
       id: 'load-coords',
-      message
+      message,
     });
     setIsLoading(false);
   }
+
+  const getCoords = () => {
+    setIsLoading(true);
+    openLoaderNotification({
+      id: 'load-coords',
+      title: 'Geolocalizando...',
+      message: 'Aber aber por donde andas',
+    });
+    navigator.geolocation.getCurrentPosition(success, error, options);
+  };
+
+  useEffect(() => {
+    getCoords();
+  }, [forcedReload]);
 
   return [coords, isLoading, isRealCoords, reloadCoords];
 }

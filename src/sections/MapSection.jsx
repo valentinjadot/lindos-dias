@@ -1,13 +1,14 @@
 import { Space } from '@mantine/core';
-import Map from './Map';
+import React from 'react';
+
+import Map from '../components/Map';
 
 export default function MapSection({ coords }) {
-    return (
-        <>
-            <Space h="lg" />
-            <Map coords={coords} />
-            <Space h="lg" />
-        </>
-    )
-
+  return (
+    <>
+      <Space h="lg" />
+      <Map coords={coords} />
+      <Space h="lg" />
+    </>
+  );
 }

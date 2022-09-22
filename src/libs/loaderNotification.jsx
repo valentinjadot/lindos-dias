@@ -1,11 +1,12 @@
 import { showNotification, updateNotification } from '@mantine/notifications';
 import { IconCheck } from '@tabler/icons';
+import React from 'react';
 
 function openLoaderNotification({ id, title, message }) {
   showNotification({
     id,
-    title: title,
-    message: message,
+    title,
+    message,
     loading: true,
     autoClose: false,
     disallowClose: true,
@@ -24,6 +25,6 @@ function closeLoaderNotification({ id, title = 'Listo!', message = '' } = {}) {
 }
 
 export {
+  closeLoaderNotification,
   openLoaderNotification,
-  closeLoaderNotification
-}
+};

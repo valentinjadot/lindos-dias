@@ -1,4 +1,7 @@
-import { Group, Text, Badge, Space } from '@mantine/core';
+import {
+  Badge, Group, Space, Text,
+} from '@mantine/core';
+import React from 'react';
 
 export default function HalfDay(props) {
   const { halfDay } = props;
@@ -6,21 +9,21 @@ export default function HalfDay(props) {
   const TIERS_DATA = [
     {
       color: 'grey',
-      sentence: 'No hay dato'
+      sentence: 'No hay dato',
     },
     {
       color: 'red',
-      sentence: 'Nope'
+      sentence: 'Nope',
     },
     {
       color: 'yellow',
-      sentence: 'Meh'
+      sentence: 'Meh',
     },
     {
       color: 'green',
-      sentence: 'Hermoso 🤩 Al agua!'
+      sentence: 'Hermoso 🤩 Al agua!',
     },
-  ]
+  ];
 
   const tierData = TIERS_DATA[halfDay.weatherScore().tierIndex()];
 
@@ -28,7 +31,11 @@ export default function HalfDay(props) {
     <>
       <Space h="sm" />
       <Group position="apart" mt="md" mb="xs">
-        <Text weight={600}>En la {halfDay.type === "morning" ? 'Mañana' : 'Tarde'}</Text>
+        <Text weight={600}>
+          En la
+          {' '}
+          {halfDay.type === 'morning' ? 'Mañana' : 'Tarde'}
+        </Text>
 
         <Badge color={tierData.color} size="lg">
           {tierData.sentence}
@@ -43,7 +50,8 @@ export default function HalfDay(props) {
         </Text>
 
         <Text weight="bold">
-          {halfDay.weatherScore().score().toFixed(0)}/100
+          {halfDay.weatherScore().score().toFixed(0)}
+          /100
         </Text>
       </Group>
 
@@ -52,15 +60,27 @@ export default function HalfDay(props) {
       </Text>
 
       <Text size="md" color="dimmed">
-        💦 {halfDay.precipitation().toFixed(0)} mm
+        💦
+        {' '}
+        {halfDay.precipitation().toFixed(0)}
+        {' '}
+        mm
       </Text>
 
       <Text size="md" color="dimmed">
-        ⛅️ {halfDay.averageCloudcover().toFixed(0)} %
+        ⛅️
+        {' '}
+        {halfDay.averageCloudcover().toFixed(0)}
+        {' '}
+        %
       </Text>
 
       <Text size="md" color="dimmed">
-        🌬 {halfDay.averageWindspeed().toFixed(0)} km/h
+        🌬
+        {' '}
+        {halfDay.averageWindspeed().toFixed(0)}
+        {' '}
+        km/h
       </Text>
     </>
   );

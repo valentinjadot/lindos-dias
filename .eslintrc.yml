@@ -1,0 +1,24 @@
+---
+extends:
+- airbnb
+- airbnb/hooks
+rules:
+  react/prop-types: 'off'
+  import/order: error
+  simple-import-sort/exports: error
+  simple-import-sort/imports: error
+  unused-imports/no-unused-imports: error
+  unused-imports/no-unused-vars:
+  - error
+  - argsIgnorePattern: "^_"
+  import/no-unresolved: [2, {commonjs: true, amd: true}]
+  import/named: 2
+  import/namespace: 2
+  import/default: 2
+  import/export: 2
+parserOptions:
+  ecmaVersion: 2020
+plugins:
+- simple-import-sort
+- unused-imports
+- import

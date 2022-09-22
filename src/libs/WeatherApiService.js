@@ -68,10 +68,11 @@ export default class WeatherApiService {
   }
 
   addHourlyDataToEvaluatedDay(hour, timeSerieIndex, evaluatedDay) {
-    if (!this.isRelevantHour(evaluatedDay, hour)) {
+    if (!WeatherApiService.isRelevantHour(evaluatedDay, hour)) {
       return;
     }
-    const pointedHalfDay = this.isMorning(hour) ? evaluatedDay.morning : evaluatedDay.afternoon;
+    const pointedHalfDay = WeatherApiService.isMorning(hour)
+      ? evaluatedDay.morning : evaluatedDay.afternoon;
 
     pointedHalfDay.addPrecipitation(this.timeSeries.hourly.precipitation[timeSerieIndex]);
     pointedHalfDay.addCloudcover(this.timeSeries.hourly.cloudcover[timeSerieIndex]);
